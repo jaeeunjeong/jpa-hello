@@ -15,15 +15,19 @@ public class JpaMain {
         tx.begin();
 
         try {
+            // 비영속 상태
             Member member = new Member();
             member.setId(1L);
             member.setName("Jeong");
 
+            // 영속 상태
             em.persist(member);
 
+            // 값의 변경이 가능 update
             member = em.find(Member.class, 1L);
             member.setName("ABC"); // 값이 바뀐다.
 
+            // 실제 db에 저장됨.
             tx.commit();
 
             // jpql
