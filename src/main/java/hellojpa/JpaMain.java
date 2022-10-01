@@ -4,7 +4,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
-import java.util.List;
 
 public class JpaMain {
     public static void main(String[] args) {
@@ -15,29 +14,25 @@ public class JpaMain {
         tx.begin();
 
         try {
-            // 비영속 상태
-            Member member = new Member();
-            member.setId(1L);
-            member.setName("Jeong");
+            Team team = new Team();
+            team.setName("TeamA");
+            em.persist(team);
 
-            // 영속 상태
+            Member member = new Member();
+            member.setUsername("member1");
+            member.setTeam(team);
             em.persist(member);
 
-            // 값의 변경이 가능 update
-            member = em.find(Member.class, 1L);
-            member.setName("ABC"); // 값이 바뀐다.
+            Member findMember = em.find(Member.class, member.getId());
 
-            // 실제 db에 저장됨.
+            Team findTeam = findMember.getTeam();
+            System.out.println(findTeam.getName());
+
+            // update 방법
+           Team newTeam = em.find(Team.class, 100L);
+            findMember.setTeam(newTeam);
+
             tx.commit();
-
-            // jpql
-            List<Member> result = em.createQuery("select m from Member as m", Member.class)
-                    .setFirstResult(5)
-                    .setMaxResults(8)
-                    .getResultList();
-
-            for(Member findMember : result) System.out.println(findMember.getName());
-
         } catch (Exception e) {
             tx.rollback();
         } finally {
