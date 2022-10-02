@@ -1,12 +1,7 @@
 package hellojpa;
 
-import org.hibernate.annotations.Comment;
-
 import javax.persistence.*;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -18,9 +13,6 @@ public class Member {
     private Long id;
     @Column(name = "USERNAME")
     private String username;
-
-    @OneToMany(mappedBy = "team")
-    private List<Member> members = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "TEAM_ID")
@@ -49,4 +41,5 @@ public class Member {
     public void setTeam(Team team) {
         this.team = team;
     }
+
 }
