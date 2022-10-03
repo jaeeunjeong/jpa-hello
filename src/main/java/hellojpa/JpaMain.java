@@ -4,7 +4,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
-import java.util.List;
 
 public class JpaMain {
     public static void main(String[] args) {
@@ -15,25 +14,16 @@ public class JpaMain {
         tx.begin();
 
         try {
-            Team team = new Team();
-            team.setName("TeamA");
-            em.persist(team);
-
             Member member = new Member();
-            member.setUsername("member1");
-            member.setTeam(team);
+            member.setUsername("member");
+
             em.persist(member);
 
-            em.flush();
-            em.close();
+            Team team = new Team();
+            team.setName("teamA");
+            team.getMembers().add(member);
 
-            Member findMember = em.find(Member.class, member.getId());
-            List<Member> members = findMember.getTeam().getMembers();
-
-            for(Member member1 : members){
-                System.out.println("MMMM"+member1);
-            }
-
+            em.persist(team);
 
             tx.commit();
         } catch (Exception e) {
