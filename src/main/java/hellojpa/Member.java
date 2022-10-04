@@ -11,12 +11,17 @@ public class Member {
     @GeneratedValue
     @Column(name = "MEMBER_ID")
     private Long id;
+
     @Column(name = "USERNAME")
     private String username;
 
     @ManyToOne
     @JoinColumn(name = "TEAM_ID")
     private Team team;
+
+    @OneToOne
+    @JoinColumn(name = "LOCKED_ID")
+    private Locker locker;
 
     public Long getId() {
         return id;
