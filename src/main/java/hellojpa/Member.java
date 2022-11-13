@@ -23,6 +23,12 @@ public class Member {
     @JoinColumn(name = "LOCKED_ID")
     private Locker locker;
 
+    @ManyToMany
+    @JoinTable(name = "MEMBER_PRODUCT",
+            joinColumns = @JoinColumn(name = "MEMBER_ID"),
+            inverseJoinColumns = @JoinColumn(name = "PRODUCT_ID"))
+    private List<Product> products = new ArrayList<Product>();
+
     public Long getId() {
         return id;
     }
