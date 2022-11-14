@@ -1,8 +1,8 @@
 package hellojpa;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Product {
@@ -10,6 +10,8 @@ public class Product {
     @Column(name = "PRODUCT_ID")
     private Long id;
 
-    private String name;
+    private String username;
 
+    @ManyToMany(mappedBy = "products")
+    private List<Member> members = new ArrayList<>();
 }

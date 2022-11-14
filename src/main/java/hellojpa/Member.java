@@ -29,6 +29,9 @@ public class Member {
             inverseJoinColumns = @JoinColumn(name = "PRODUCT_ID"))
     private List<Product> products = new ArrayList<Product>();
 
+    @OneToMany(mappedBy = "member")
+    private List<Order> orders = new ArrayList<>();
+
     public Long getId() {
         return id;
     }
